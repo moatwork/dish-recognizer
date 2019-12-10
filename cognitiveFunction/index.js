@@ -21,13 +21,6 @@ module.exports = function (context, blobTrigger) {
   )
   .then(resp => {
     context.log("### Cognitive API called successfully");
-    context.log("Results:");
-    results.predictions.forEach(predictedResult => {
-      context.log(`\t ${predictedResult.tagName}: ${(predictedResult.probability * 100.0).toFixed(2)}%`);
-    });
-    context.log("### That looks a bit like: "+resp.predictions.text);
-    context.log("### Id: "+JSON.stringify(resp.id));
-
     // We want to inject the original image URL into our result object
     // Mutate the object and insert extra properties used by viewer app
     resp.srcUrl = context.bindingData.uri;
@@ -37,8 +30,11 @@ module.exports = function (context, blobTrigger) {
     // Saving result to blob is very easy with Functions, we just assign the output variable
     // We need to convert the resp back to JSON string
     context.bindings.outputBlob = JSON.stringify(resp);
-    context.done();
+    // Logging response
     context.log("### Function completed");
+    context.log("### That looks a bit like: "+JSON.stringify(resp));
+    context.log("### Id: "+JSON.stringify(resp.id));
+    context.done();
   })
   .catch(err => {
     // Error and general badness happened
