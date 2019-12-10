@@ -5,8 +5,8 @@
 const http = require('./simple-http.js');
 
 const VISION_API_KEY = process.env.VISION_API_KEY;
-const VISION_API_REGION = process.env.VISION_API_REGION || "westeurope"
-const VISION_API_ENDPOINT = `https://${VISION_API_REGION}.api.cognitive.microsoft.com/vision/v1.0/analyze?visualFeatures=Categories,Tags,Description,Faces,ImageType,Color&details=Celebrities`;
+//const VISION_API_REGION = process.env.VISION_API_REGION || "westeurope"
+const VISION_API_ENDPOINT = `https://dish1.cognitiveservices.azure.com/customvision/v3.0/Prediction/28d8ff9b-1770-4b47-ac91-e24128a6b36d/classify/iterations/Iteration1/url?projectId=28d8ff9b-1770-4b47-ac91-e24128a6b36d&publishedName=Iteration1`;
 
 module.exports = function (context, blobTrigger) {
   context.log("### New photo uploaded, starting analysis...");
@@ -16,7 +16,7 @@ module.exports = function (context, blobTrigger) {
   http.postJSON(
     VISION_API_ENDPOINT, 
     { url: context.bindingData.uri }, 
-    { 'Ocp-Apim-Subscription-Key': VISION_API_KEY }
+    { 'Prediction-Key': VISION_API_KEY }
   )
   .then(resp => {
     context.log("### Cognitive API called successfully");
