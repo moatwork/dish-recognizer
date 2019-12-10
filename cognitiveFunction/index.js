@@ -21,6 +21,10 @@ module.exports = function (context, blobTrigger) {
   )
   .then(resp => {
     context.log("### Cognitive API called successfully");
+    context.log("Results:");
+    results.predictions.forEach(predictedResult => {
+      context.log(`\t ${predictedResult.tagName}: ${(predictedResult.probability * 100.0).toFixed(2)}%`);
+    });
     context.log("### That looks a bit like: "+resp.predictions.text);
     context.log("### Id: "+JSON.stringify(resp.id));
 
@@ -41,7 +45,6 @@ module.exports = function (context, blobTrigger) {
     context.log("### Error! Cognitive API call failed!");
     context.log(VISION_API_ENDPOINT);
     context.log(context.bindingData.uri);
-    context.log(VISION_API_KEY);
     context.log(err.message || "");
     context.done();    
   })
