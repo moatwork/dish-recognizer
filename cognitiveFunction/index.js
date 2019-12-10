@@ -38,6 +38,9 @@ module.exports = function (context, blobTrigger) {
   .catch(err => {
     // Error and general badness happened
     context.log("### Error! Cognitive API call failed!");
+    context.log(VISION_API_ENDPOINT);
+    context.log(context.bindingData.uri);
+    context.log(VISION_API_KEY);
     context.log(err.message || "");
     context.done();    
   })
