@@ -15,8 +15,9 @@ module.exports = function (context, blobTrigger) {
   // Post simple JSON object with the url of the image and put the key in the headers
   http.postJSON(
     VISION_API_ENDPOINT, 
-    { url: context.bindingData.uri }, 
-    { 'Prediction-Key': VISION_API_KEY }
+    { 'url': context.bindingData.uri }, 
+    { 'Prediction-Key': VISION_API_KEY },
+    {'Content-Type': "application/json"}
   )
   .then(resp => {
     context.log("### Cognitive API called successfully");
