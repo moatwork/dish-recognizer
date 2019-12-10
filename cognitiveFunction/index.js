@@ -21,8 +21,8 @@ module.exports = function (context, blobTrigger) {
   )
   .then(resp => {
     context.log("### Cognitive API called successfully");
-    context.log("### That looks a bit like: "+resp.description.captions[0].text);
-    context.log("### Tags: "+JSON.stringify(resp.tags));
+    context.log("### That looks a bit like: "+resp.predictions.text);
+    context.log("### Id: "+JSON.stringify(resp.id));
 
     // We want to inject the original image URL into our result object
     // Mutate the object and insert extra properties used by viewer app
