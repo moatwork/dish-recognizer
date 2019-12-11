@@ -97,7 +97,35 @@
 
         // Display on page (with real img element)
         $('#img').attr('src', dataUrl);
+        // Now HTTP POST to endpoint
+        fetch(dataUrl).then(function(resp) {
+            return resp.arrayBuffer();
+        }).then(function(buf) {
+            $.ajax({
+                url: POST_ENDPOINT,
+                type: "POST",
+                contentType: "application/octet-stream",
+                processData: false,
+                data: new Uint8Array(buf),
+                headers: {"Prediction-Key": "61b82cd30f7742e49b94cb61b685c7fe"},
+                // If good or bad, display message
+                success: function (resp) {
+                    $("#msg").html(JSON.stringify(resp));
+                },
+                error: function (xhr, status, error) {
+                    $("#msg").html(status+' '+error);
+                }
+            });
+        });
+      }
+      image.src = readerEvent.target.result;
+    }
 
+    reader.readAsDataURL(file);
+  }
+  
+</script>
+/*
         // Now HTTP POST to endpoint
         var imgData = dataUrl.split(',')[1];
         $.ajax({
@@ -122,3 +150,4 @@
   }
   
 </script>
+*/
