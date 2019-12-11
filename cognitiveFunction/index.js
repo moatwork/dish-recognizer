@@ -33,6 +33,14 @@ module.exports = function (context, blobTrigger) {
     // Logging response
     context.log("### Function completed");
     context.log("### That looks a bit like: "+JSON.stringify(resp));
+    
+  
+    // Show in webpage
+    var echoHtml = require('fs').readFileSync(__dirname+'/cameraCvEcho.html').toString();
+    context.res.status = 200;
+    context.res.headers['Content-Type'] = "text/html";
+    context.res.body = echoHtml;
+
     context.log("### Id: "+JSON.stringify(resp.id));
     context.done();
   })
