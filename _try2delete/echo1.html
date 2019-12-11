@@ -1,0 +1,45 @@
+<html>
+<head>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
+
+<script>
+
+    $(function() {
+
+
+//'https://dishrecog.blob.core.windows.net/photo-out/30ed83f0-68fc-48b3-8931-974c92bade97.json'
+
+      $.ajax({
+         url: 'https://dishrecog.blob.core.windows.net/photo-out/30ed83f0-68fc-48b3-8931-974c92bade97.json',
+         type:"GET",
+
+
+         success: function(data){
+            alert(data.predictions[0].tagName);
+         }
+         });
+
+});
+</script>
+</head>
+
+<body>
+
+<div class="wrapper">
+<div class="predictionecho"></div>
+<div class="profile">
+   <table id= "userdata" border="2">
+  <thead>
+            <th>Tag</th>
+            <th>Probability</th>
+        </thead>
+      <tbody>
+
+       </tbody>
+   </table>
+
+</div>
+</div>
+
+</body>
+</html>
