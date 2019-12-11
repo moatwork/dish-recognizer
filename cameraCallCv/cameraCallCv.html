@@ -46,24 +46,8 @@
 
 <script>
   // Config here
-  const util = require('util');
-  const fs = require('fs');
-  const TrainingApiClient = require("@azure/cognitiveservices-customvision-training");
-  const PredictionApiClient = require("@azure/cognitiveservices-customvision-prediction");
-
-  const setTimeoutPromise = util.promisify(setTimeout);
-
-
-  const predictionKey = process.env.VISION_API_KEY;
-  const predictionResourceId = "<your prediction resource id>";
-  const sampleDataRoot = "<path to image files>";
-
-  const endPoint = "https://dish1.cognitiveservices.azure.com/"
-
-  const publishIterationName = "classifyModel";
-  const POST_ENDPOINT = "/api/cameraCallCv";
-  const POST_ENDPOINT_CV = "https://dish1.cognitiveservices.azure.com/customvision/v3.0/Prediction/28d8ff9b-1770-4b47-ac91-e24128a6b36d/classify/iterations/Iteration1/image";
-  //const POST_ENDPOINT = "https://cameraapp.azurewebsites.net/api/cameraFunction";
+  const POST_ENDPOINT = "/api/cameraFunction";
+  //const POST_ENDPOINT = "https://functions-app-demo.azurewebsites.net/api/cameraFunction";
   const MAX_SIZE = 1600;
   const JPEG_QUAL = 0.7;
 
@@ -115,21 +99,25 @@
         $('#img').attr('src', dataUrl);
 
         // Now HTTP POST to endpoint
-        var imgData = dataUrl.split(',')[1];
-        $.ajax({
-          url: POST_ENDPOINT,
-          type: "POST",
-          data: imgData,
-          contentType: "application/octet-stream;base64",
-          // If good or bad, display message
-          success: function () {
-            $("#msg").html('Photo uploaded to Azure Functions!');
-            $("#msg").show().delay(4000).fadeOut();
-          },
-          error: function (xhr, status, error) {
-            $("#msg").html(status+' '+error);
-          }
-        }); 
+        fetch(dataUrl).then(function(resp) {
+            return resp.arrayBuffer();
+        }).then(function(buf) {
+            $.ajax({
+                url: POST_ENDPOINT,
+                type: "POST",
+                contentType: "application/octet-stream",
+                processData: false,
+                data: new Uint8Array(buf),
+                headers: {"Prediction-Key": "61b82cd30f7742e49b94cb61b685c7fe"},
+                // If good or bad, display message
+                success: function (resp) {
+                    $("#msg").html(JSON.stringify(resp));
+                },
+                error: function (xhr, status, error) {
+                    $("#msg").html(status+' '+error);
+                }
+            });
+        });
       }
       image.src = readerEvent.target.result;
     }
