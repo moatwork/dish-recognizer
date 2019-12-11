@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -46,10 +47,8 @@
 
 <script>
   // Config here
-  const POST_ENDPOINT = "/api/cameraCallCv";
-  const POST_ENDPOINT_CV = "https://dish1.cognitiveservices.azure.com/customvision/v3.0/Prediction/28d8ff9b-1770-4b47-ac91-e24128a6b36d/classify/iterations/Iteration1/image";
-  //const POST_ENDPOINT = "https://functions-app-demo.azurewebsites.net/api/cameraCallCv";
-  const MAX_SIZE = 1600;
+  const POST_ENDPOINT = " https://dish1.cognitiveservices.azure.com/customvision/v3.0/Prediction/28d8ff9b-1770-4b47-ac91-e24128a6b36d/classify/iterations/Iteration1/image";
+  const MAX_SIZE = 1200;
   const JPEG_QUAL = 0.7;
 
   $('#file').on('change', function (e) {
@@ -98,16 +97,13 @@
 
         // Display on page (with real img element)
         $('#img').attr('src', dataUrl);
-        
+
         // Now HTTP POST to endpoint
-        $("#msg").html("to fetch dataUrl");
         fetch(dataUrl).then(function(resp) {
-          $("#msg").html(resp);
             return resp.arrayBuffer();
         }).then(function(buf) {
-            $("#msg").html("send to CV");
             $.ajax({
-                url: POST_ENDPOINT_CV,
+                url: POST_ENDPOINT,
                 type: "POST",
                 contentType: "application/octet-stream",
                 processData: false,
@@ -116,44 +112,18 @@
                 // If good or bad, display message
                 success: function (resp) {
                     $("#msg").html(JSON.stringify(resp));
-                    $("#msg").html(resp);
                 },
                 error: function (xhr, status, error) {
                     $("#msg").html(status+' '+error);
                 }
             });
         });
+
       }
       image.src = readerEvent.target.result;
     }
 
     reader.readAsDataURL(file);
   }
-  
-</script>
-/*
-        // Now HTTP POST to endpoint
-        var imgData = dataUrl.split(',')[1];
-        $.ajax({
-          url: POST_ENDPOINT,
-          type: "POST",
-          data: imgData,
-          contentType: "application/octet-stream;base64",
-          // If good or bad, display message
-          success: function () {
-            $("#msg").html('Photo uploaded to Azure Functions!');
-            $("#msg").show().delay(4000).fadeOut();
-          },
-          error: function (xhr, status, error) {
-            $("#msg").html(status+' '+error);
-          }
-        }); 
-      }
-      image.src = readerEvent.target.result;
-    }
 
-    reader.readAsDataURL(file);
-  }
-  
 </script>
-*/
