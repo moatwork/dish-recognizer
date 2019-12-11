@@ -97,8 +97,11 @@
 
         // Display on page (with real img element)
         $('#img').attr('src', dataUrl);
+        
         // Now HTTP POST to endpoint
+        $("#msg").html("to fetch dataUrl");
         fetch(dataUrl).then(function(resp) {
+          $("#msg").html(resp);
             return resp.arrayBuffer();
         }).then(function(buf) {
             $("#msg").html("send to CV");
