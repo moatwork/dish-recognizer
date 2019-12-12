@@ -6,7 +6,7 @@ const http = require('./simple-http.js');
 
 const VISION_API_KEY = process.env.VISION_API_KEY;
 //const VISION_API_REGION = process.env.VISION_API_REGION || "westeurope"
-const VISION_API_ENDPOINT = `https://dish1.cognitiveservices.azure.com/customvision/v3.0/Prediction/28d8ff9b-1770-4b47-ac91-e24128a6b36d/classify/iterations/Iteration1/url?projectId=28d8ff9b-1770-4b47-ac91-e24128a6b36d&publishedName=Iteration1`;
+const VISION_API_URL_ENDPOINT = `https://dish1.cognitiveservices.azure.com/customvision/v3.0/Prediction/28d8ff9b-1770-4b47-ac91-e24128a6b36d/classify/iterations/Iteration1/url?projectId=28d8ff9b-1770-4b47-ac91-e24128a6b36d&publishedName=Iteration1`;
 
 module.exports = function (context, blobTrigger) {
   context.log("### New photo uploaded, starting analysis...");
@@ -14,7 +14,7 @@ module.exports = function (context, blobTrigger) {
   // Call cognitive service vision API
   // Post simple JSON object with the url of the image and put the key in the headers
   http.postJSON(
-    VISION_API_ENDPOINT, 
+    VISION_API_URL_ENDPOINT, 
     { 'url': context.bindingData.uri }, 
     { 'Prediction-Key': VISION_API_KEY },
     {'Content-Type': "application/json"}
@@ -39,7 +39,7 @@ module.exports = function (context, blobTrigger) {
   .catch(err => {
     // Error and general badness happened
     context.log("### Error! Cognitive API call failed!");
-    context.log(VISION_API_ENDPOINT);
+    context.log(VISION_API_URL_ENDPOINT);
     context.log(context.bindingData.uri);
     context.log(err.message || "");
     context.done();    
