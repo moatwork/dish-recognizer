@@ -4,6 +4,8 @@
 // - Receives images from the camera app and saves them to blob storage 
 // Ben Coleman, Aug 2018
 //
+
+const VISION_API_KEY = process.env.VISION_API_KEY;
 module.exports = function (context, req) {
   context.log('JavaScript HTTP trigger function processed a request.');
 
