@@ -47,8 +47,8 @@
 
 <script>
   // Config here
-  const VISION_API_ENDPOINT = " https://dish1.cognitiveservices.azure.com/customvision/v3.0/Prediction/28d8ff9b-1770-4b47-ac91-e24128a6b36d/classify/iterations/Iteration1/image";
-  const VISION_API_KEY = process.env.VISION_API_KEY;
+  const VISION_API_IMG_ENDPOINT = " https://dish1.cognitiveservices.azure.com/customvision/v3.0/Prediction/28d8ff9b-1770-4b47-ac91-e24128a6b36d/classify/iterations/Iteration1/image";
+  //const POST_ENDPOINT = "https://functions-app-demo.azurewebsites.net/api/cameraFunction";
   const MAX_SIZE = 1200;
   const JPEG_QUAL = 0.7;
 
@@ -104,12 +104,12 @@
             return resp.arrayBuffer();
         }).then(function(buf) {
             $.ajax({
-                url: VISION_API_ENDPOINT,
+                url: VISION_API_IMG_ENDPOINT,
                 type: "POST",
                 contentType: "application/octet-stream",
                 processData: false,
                 data: new Uint8Array(buf),
-                headers: {"Prediction-Key": VISION_API_KEY},
+                headers: {"Prediction-Key": "61b82cd30f7742e49b94cb61b685c7fe"},
                 // If good or bad, display message
                 success: function (resp) {
                     $("#msg").html(JSON.stringify(resp));
