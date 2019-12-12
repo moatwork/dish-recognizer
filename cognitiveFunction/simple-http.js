@@ -2,7 +2,7 @@
   Simple compact HTTP library in vanilla Node.js 8.x
   Ben Coleman, Oct 2018
 */
-const VISION_API_KEY = process.env.VISION_API_KEY;
+
 // HTTP GET request without options
 const getUrl = function(url) {
   let req = require('url').parse(url);

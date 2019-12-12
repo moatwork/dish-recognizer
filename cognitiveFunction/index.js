@@ -4,7 +4,7 @@
 //
 const http = require('./simple-http.js');
 
-//const VISION_API_KEY = process.env.VISION_API_KEY;
+const VISION_API_KEY = process.env.VISION_API_KEY;
 //const VISION_API_REGION = process.env.VISION_API_REGION || "westeurope"
 const VISION_API_URL_ENDPOINT = `https://dish1.cognitiveservices.azure.com/customvision/v3.0/Prediction/28d8ff9b-1770-4b47-ac91-e24128a6b36d/classify/iterations/Iteration1/url?projectId=28d8ff9b-1770-4b47-ac91-e24128a6b36d&publishedName=Iteration1`;
 
